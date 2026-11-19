@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>九州12天・日系繪本行程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFCF6; --ink:#3E3A39; --coral:#F2A497; --yellow:#F6D27A;
+  --blue:#A8D3E6; --green:#B9DAA5; --pink-soft:#FBE3DC; --blue-soft:#E2F1F8;
+  --green-soft:#EAF4DF; --yellow-soft:#FDF3D3; --muted:#8A837F; --line:3px solid var(--ink);
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Huninn","PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:16px; line-height:1.7; padding-bottom:96px;}
+a{color:inherit;}
+/* ---------- fixed top menu ---------- */
+.nav{position:fixed; top:0; left:0; right:0; z-index:50; background:var(--paper);
+  border-bottom:var(--line); display:flex; gap:6px; padding:10px 10px 8px; overflow-x:auto;
+  scrollbar-width:none;}
+.nav::-webkit-scrollbar{display:none;}
+.nav button{flex:1 0 auto; font-family:inherit; font-size:15px; font-weight:700; color:var(--ink);
+  background:#fff; border:var(--line); border-radius:999px; padding:7px 14px; cursor:pointer;
+  box-shadow:2px 2px 0 var(--ink); transition:transform .12s ease, background .12s ease;}
+.nav button:active{transform:translate(2px,2px); box-shadow:0 0 0 var(--ink);}
+.nav button.on{background:var(--yellow);}
+/* ---------- layout ---------- */
+.wrap{max-width:640px; margin:0 auto; padding:68px 14px 0;}
+section{display:none;}
+section.on{display:block; animation:pop .35s ease;}
+@keyframes pop{0%{transform:scale(.96); opacity:.4;} 60%{transform:scale(1.015);} 100%{transform:scale(1); opacity:1;}}
+h1{font-size:30px; line-height:1.3; margin:8px 0 4px;}
+h2{font-size:21px; margin:26px 0 10px; display:flex; align-items:center; gap:8px;}
+h2 .dot{width:14px; height:14px; border-radius:50%; border:var(--line); flex:none;}
+.sub{color:var(--muted); font-size:14px; margin:0 0 14px;}
+.card{background:#fff; border:var(--line); border-radius:22px; padding:16px; margin:12px 0;
+  box-shadow:4px 4px 0 var(--ink);}
+.card.coral{background:var(--pink-soft);}
+.card.blue{background:var(--blue-soft);}
+.card.green{background:var(--green-soft);}
+.card.yellow{background:var(--yellow-soft);}
+.card h3{margin:0 0 8px; font-size:18px;}
+.card p{margin:6px 0; font-size:15px;}
+.small{font-size:13px; color:var(--muted);}
+.tag{display:inline-block; font-size:13px; font-weight:700; border:2.5px solid var(--ink);
+  border-radius:999px; padding:2px 10px; margin:2px 4px 2px 0; background:#fff;}
+.tag.blue{background:var(--blue);} .tag.green{background:var(--green);}
+.tag.coral{background:var(--coral);} .tag.yellow{background:var(--yellow);}
+.tag.purple{background:#D9C8F0;}
+.star{color:#E8833A; font-weight:700;}
+/* ---------- hero ---------- */
+.hero{border:var(--line); border-radius:26px; overflow:hidden; background:var(--blue-soft);
+  box-shadow:4px 4px 0 var(--ink); margin:6px 0 14px;}
+.hero svg{display:block; width:100%; height:auto;}
+.floaty{animation:floaty 5s ease-in-out infinite;}
+.floaty2{animation:floaty 6.5s ease-in-out infinite reverse;}
+@keyframes floaty{0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);}}
+.count{display:flex; gap:8px; margin:10px 0 4px;}
+.count .cell{flex:1; background:#fff; border:var(--line); border-radius:16px; text-align:center;
+  padding:8px 2px; box-shadow:3px 3px 0 var(--ink);}
+.count .n{font-size:26px; font-weight:700; line-height:1.1; font-variant-numeric:tabular-nums;}
+.count .u{font-size:12px; color:var(--muted);}
+input[type="date"]{font-family:inherit; font-size:15px; color:var(--ink); background:#fff;
+  border:var(--line); border-radius:12px; padding:8px 10px; box-shadow:2px 2px 0 var(--ink);}
+.btn{display:inline-block; font-family:inherit; font-size:15px; font-weight:700; color:var(--ink);
+  background:var(--yellow); border:var(--line); border-radius:999px; padding:8px 18px; cursor:pointer;
+  box-shadow:3px 3px 0 var(--ink); text-decoration:none; margin:4px 4px 4px 0;}
+.btn:active{transform:translate(2px,2px); box-shadow:0 0 0 var(--ink);}
+.btn.blue{background:var(--blue);} .btn.green{background:var(--green);} .btn.coral{background:var(--coral);}
+.btn.white{background:#fff;}
+/* ---------- day switcher ---------- */
+.days{display:flex; gap:8px; overflow-x:auto; padding:6px 2px 12px; scrollbar-width:none;}
+.days::-webkit-scrollbar{display:none;}
+.days button{flex:0 0 auto; font-family:inherit; font-size:14px; font-weight:700; color:var(--ink);
+  background:#fff; border:var(--line); border-radius:16px; padding:8px 12px; cursor:pointer;
+  box-shadow:2px 2px 0 var(--ink); text-align:center; line-height:1.4;}
+.days button small{display:block; font-size:11px; color:var(--muted); font-weight:400;}
+.days button.on{background:var(--coral);}
+.days button.bounce{animation:bounce .45s ease;}
+@keyframes bounce{0%{transform:scale(1);} 40%{transform:scale(1.14) rotate(-2deg);} 70%{transform:scale(.96);} 100%{transform:scale(1);}}
+/* ---------- timeline ---------- */
+.tl{list-style:none; margin:10px 0 0; padding:0 0 0 14px; border-left:3px dashed var(--ink);}
+.tl li{position:relative; padding:0 0 14px 16px; font-size:15px;}
+.tl li:last-child{padding-bottom:2px;}
+.tl li::before{content:""; position:absolute; left:-24px; top:6px; width:12px; height:12px;
+  border-radius:50%; background:var(--yellow); border:2.5px solid var(--ink);}
+.tl .t{font-weight:700; font-variant-numeric:tabular-nums; margin-right:6px;}
+.tl .must{font-size:12px; font-weight:700; color:#fff; background:#E8833A; border:2px solid var(--ink);
+  border-radius:999px; padding:0 7px; margin-left:4px; white-space:nowrap;}
+.note{font-size:14px; background:var(--yellow-soft); border:2.5px dashed var(--ink);
+  border-radius:14px; padding:10px 12px; margin:10px 0 0; line-height:1.8;}
+.stops{margin-top:12px; font-size:14px; line-height:2;}
+.stops a{color:#2B6CB0; text-decoration:underline; text-underline-offset:3px;}
+/* ---------- checklists ---------- */
+.prog{height:18px; border:var(--line); border-radius:999px; background:#fff; overflow:hidden; margin:8px 0 4px;}
+.prog i{display:block; height:100%; background:var(--green); transition:width .3s ease;}
+.chk{list-style:none; margin:8px 0 0; padding:0;}
+.chk li{display:flex; gap:10px; align-items:flex-start; padding:9px 2px; border-bottom:2px dashed #E8E0D5;
+  cursor:pointer; font-size:15px;}
+.chk li:last-child{border-bottom:none;}
+.chk .box{flex:none; width:24px; height:24px; border:var(--line); border-radius:8px; background:#fff;
+  display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:700; margin-top:1px;}
+.chk li.done .box{background:var(--green);}
+.chk li.done .txt{color:var(--muted); text-decoration:line-through;}
+/* ---------- nearby grid ---------- */
+.grid{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:10px;}
+.grid a{display:flex; align-items:center; gap:8px; background:#fff; border:var(--line); border-radius:16px;
+  padding:12px; text-decoration:none; font-weight:700; font-size:15px; box-shadow:3px 3px 0 var(--ink);}
+.grid a:active{transform:translate(2px,2px); box-shadow:0 0 0 var(--ink);}
+.grid .ic{width:34px; height:34px; flex:none; border:2.5px solid var(--ink); border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:18px; background:var(--yellow-soft);}
+.jpy{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:8px;}
+.jpy input{font-family:inherit; font-size:16px; width:130px; color:var(--ink); background:#fff;
+  border:var(--line); border-radius:12px; padding:8px 10px; box-shadow:2px 2px 0 var(--ink);}
+.jpy .out{font-weight:700; font-size:18px;}
+.foot{text-align:center; color:var(--muted); font-size:13px; margin-top:28px;}
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{animation:none !important; transition:none !important;}
+  html{scroll-behavior:auto;}
+}
+</style>
+</head>
+<body>
+<nav class="nav" id="nav">
+  <button data-sec="home" class="on">首頁</button>
+  <button data-sec="trip">行程</button>
+  <button data-sec="lists">清單</button>
+  <button data-sec="tools">工具</button>
+  <button data-sec="info">資訊</button>
+</nav>
+<div class="wrap">
+
+<!-- ============ 首頁 ============ -->
+<section id="sec-home" class="on">
+  <div class="hero">
+    <svg viewBox="0 0 640 300" role="img" aria-label="九州手繪插圖">
+      <rect width="640" height="300" fill="#E2F1F8"/>
+      <circle cx="90" cy="62" r="34" fill="#F6D27A" stroke="#3E3A39" stroke-width="5"/>
+      <g class="floaty" fill="#FFFFFF" stroke="#3E3A39" stroke-width="4">
+        <ellipse cx="230" cy="58" rx="52" ry="20"/><ellipse cx="280" cy="48" rx="40" ry="18"/>
+      </g>
+      <g class="floaty2" fill="#FFFFFF" stroke="#3E3A39" stroke-width="4">
+        <ellipse cx="500" cy="92" rx="46" ry="17"/><ellipse cx="540" cy="82" rx="32" ry="14"/>
+      </g>
+      <path d="M410 250 L500 96 L590 250 Z" fill="#B9DAA5" stroke="#3E3A39" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M472 152 L500 96 L528 152 L516 138 L500 156 L484 138 Z" fill="#FFFCF6" stroke="#3E3A39" stroke-width="4" stroke-linejoin="round"/>
+      <g class="floaty" fill="#FFFFFF" stroke="#3E3A39" stroke-width="4">
+        <circle cx="500" cy="74" r="16"/><circle cx="524" cy="62" r="12"/><circle cx="478" cy="64" r="11"/>
+      </g>
+      <path d="M0 250 Q160 210 320 248 T640 244 V300 H0 Z" fill="#B9DAA5" stroke="#3E3A39" stroke-width="5"/>
+      <path d="M0 272 Q200 240 420 268 T640 262 V300 H0 Z" fill="#8FCB7E" stroke="#3E3A39" stroke-width="5"/>
+      <g stroke="#3E3A39" stroke-width="5" stroke-linecap="round">
+        <path d="M52 252 L52 190" fill="none"/><path d="M96 252 L96 190" fill="none"/>
+        <path d="M40 192 L108 192" fill="none"/><path d="M46 172 L102 172" fill="none"/>
+        <path d="M60 252 L60 210 L88 210 L88 252" fill="#F2A497"/>
+      </g>
+      <g>
+        <rect x="150" y="218" width="170" height="42" rx="14" fill="#F2A497" stroke="#3E3A39" stroke-width="5"/>
+        <rect x="166" y="228" width="34" height="20" rx="6" fill="#FFFCF6" stroke="#3E3A39" stroke-width="4"/>
+        <rect x="212" y="228" width="34" height="20" rx="6" fill="#FFFCF6" stroke="#3E3A39" stroke-width="4"/>
+        <rect x="258" y="228" width="34" height="20" rx="6" fill="#FFFCF6" stroke="#3E3A39" stroke-width="4"/>
+        <circle cx="186" cy="264" r="11" fill="#3E3A39"/><circle cx="284" cy="264" r="11" fill="#3E3A39"/>
+      </g>
+      <path d="M0 282 H640" stroke="#3E3A39" stroke-width="5"/>
+    </svg>
+  </div>
+  <h1>九州 12 天</h1>
+  <p class="sub">福岡 → 長崎 → 熊本 → 高千穗 → 阿蘇 → 黑川 → 由布院 → 別府 → 宮崎 → 鹿兒島</p>
+  <div>
+    <span class="tag yellow">12 天 11 晚</span><span class="tag blue">JR ＋ 巴士</span><span class="tag green">不開車</span><span class="tag coral">溫泉 ×3</span>
+  </div>
+  <div class="card yellow">
+    <h3>⏳ 出發倒數</h3>
+    <div class="count" id="count">
+      <div class="cell"><div class="n" id="cd-d">–</div><div class="u">天</div></div>
+      <div class="cell"><div class="n" id="cd-h">–</div><div class="u">小時</div></div>
+      <div class="cell"><div class="n" id="cd-m">–</div><div class="u">分鐘</div></div>
+      <div class="cell"><div class="n" id="cd-s">–</div><div class="u">秒</div></div>
+    </div>
+    <p id="cd-label" class="small">還沒設定出發日，點下面選一天，倒數就開始跑。</p>
+    <p><input type="date" id="dep-date"> <span class="small">出發日存在這支手機</span></p>
+    <p>🕰️ 日本時間 <b id="jptime">–</b></p>
+  </div>
+  <div class="card blue">
+    <h3>✈️ 航班資訊</h3>
+    <p><b>去程</b>　TPE 桃園 → 福岡（FUK）<br><span class="tag coral">待定</span><span class="small">機票還沒訂，D1 行程照 09:30 抵達排</span></p>
+    <p><b>回程</b>　鹿兒島（KOJ）→ TPE 桃園<br><span class="tag coral">待定</span><span class="small">建議買開口票，華航有鹿兒島航線，班次先查</span></p>
+    <p class="small">訂好後點下面按鈕，把航班填進來：</p>
+    <button class="btn white" onclick="editFlight('去程航班', 'flight-out')">✏️ 填去程航班</button>
+    <button class="btn white" onclick="editFlight('回程航班', 'flight-back')">✏️ 填回程航班</button>
+    <p id="flight-out" class="small"></p>
+    <p id="flight-back" class="small"></p>
+  </div>
+  <div class="card green">
+    <h3>🗺️ 怎麼玩</h3>
+    <p>全程大眾運輸：JR 新幹線＋特急串起長崎、熊本、宮崎、鹿兒島，巴士接高千穗、阿蘇、黑川、由布院。北九州 JR Pass 第 3 天啟用。</p>
+    <p>早上衝、下午放鬆；三晚溫泉旅館（黑川、由布院、別府）慢慢泡。</p>
+  </div>
+</section>
+
+<!-- ============ 行程 ============ -->
+<section id="sec-trip">
+  <h2><span class="dot" style="background:var(--coral)"></span>每日行程</h2>
+  <p class="sub">點日期切換，<span class="star">★ 必去</span> 是這天不能錯過的。</p>
+  <div class="days" id="day-pills"></div>
+  <div id="day-body"></div>
+</section>
+
+<!-- ============ 清單 ============ -->
+<section id="sec-lists">
+  <h2><span class="dot" style="background:var(--green)"></span>出發前待辦</h2>
+  <div class="card">
+    <p><b id="pre-count"></b></p>
+    <div class="prog"><i id="pre-bar" style="width:0%"></i></div>
+    <ul class="chk" id="pre-list"></ul>
+  </div>
+  <h2><span class="dot" style="background:var(--blue)"></span>行李清單</h2>
+  <div class="card">
+    <p><b id="pack-count"></b></p>
+    <div class="prog"><i id="pack-bar" style="width:0%"></i></div>
+    <ul class="chk" id="pack-list"></ul>
+  </div>
+  <p class="small">打勾存在這支手機，關掉重開還在。</p>
+</section>
+
+<!-- ============ 工具 ============ -->
+<section id="sec-tools">
+  <h2><span class="dot" style="background:var(--yellow)"></span>找我附近的</h2>
+  <p class="sub">點一個，直接開 Google 地圖搜附近的地點。</p>
+  <div class="grid" id="near-grid"></div>
+  <h2><span class="dot" style="background:var(--blue)"></span>日幣換算</h2>
+  <div class="card blue">
+    <div class="jpy">
+      <input type="number" id="jpy-in" placeholder="日幣 ¥" inputmode="numeric">
+      <span>× 匯率</span>
+      <input type="number" id="jpy-rate" value="0.21" step="0.01" style="width:90px">
+      <span class="out" id="jpy-out"></span>
+    </div>
+    <p class="small">匯率自己改，存在這支手機。</p>
+  </div>
+  <h2><span class="dot" style="background:var(--coral)"></span>緊急聯絡</h2>
+  <div class="card coral">
+    <p>🚔 日本警察 <a href="tel:110"><b>110</b></a>　🚑 救護／消防 <a href="tel:119"><b>119</b></a></p>
+    <p>📞 外交部旅外救助專線 <a href="tel:0800085095"><b>0800-085-095</b></a>（台灣撥打免費）</p>
+    <p><a class="btn white" href="https://www.google.com/maps/search/台北駐福岡經濟文化辦事處" target="_blank" rel="noopener">🗺️ 駐福岡辦事處位置</a></p>
+  </div>
+</section>
+
+<!-- ============ 資訊 ============ -->
+<section id="sec-info">
+  <h2><span class="dot" style="background:var(--green)"></span>交通票券</h2>
+  <div class="card green">
+    <p><b>北九州 JR Pass</b>：第 3 天啟用，5 日券用到 D7。D10–D12 的 JR（由布院之森、日輪、霧島）需另購票。</p>
+    <p><b>SUGOCA</b>：福岡機場或博多車站買，搭地鐵、巴士、路面電車都方便；長崎路面電車 30 分鐘內轉乘第二程免費。</p>
+    <p><b>指定席</b>：接力燕子號、海鷗號、阿蘇男孩、由布院之森、日輪、霧島都要劃位，拿到 Pass 就先劃。</p>
+  </div>
+  <h2><span class="dot" style="background:var(--yellow)"></span>重要預約時程</h2>
+  <div class="card yellow">
+    <p>🛶 <b>高千穗峽划船</b>：乘船日 2 週前 09:00 開放網路預約，10 月週末完全預約制。</p>
+    <p>🚌 <b>たかちほ號、九州橫斷巴士</b>：1 個月前預約，全車指定席。</p>
+    <p>🚃 <b>阿蘇男孩</b>：行駛日曆制，出發前務必查運転日曆；停駛日可能由其他列車代駛。</p>
+    <p>🎫 <b>長崎路面電車一日券 ¥600</b>：車上不賣，車站觀光案內所先買。</p>
+  </div>
+  <h2><span class="dot" style="background:var(--blue)"></span>行前提醒</h2>
+  <div class="card blue">
+    <p>🛂 台灣護照免簽 90 天，不用辦簽證；記得填 Visit Japan Web，截圖入境 QR Code。</p>
+    <p>🌋 阿蘇中岳火口目前封閉（噴火警戒等級 2）；大觀峰路線巴士僅週末假日行駛。</p>
+    <p>♨️ 黑川「入湯手形」一張木牌可泡三家露天風呂，溫泉街慢慢逛就好。</p>
+  </div>
+</section>
+
+<p class="foot">九州 12 天・日系繪本行程 — 資料存在這支手機，不上傳。</p>
+</div>
+<script>
+/* ---------- 資料：九州 12 天（福岡 → 鹿兒島） ---------- */
+var DAYS=[
+{day:'D1',place:'福岡',title:'Day 1　抵達福岡・市區',tags:[['地鐵','blue'],['步行','green']],
+transport:'機場 → 博多：國際線航廈免費接駁到國內線航廈 → 地鐵機場線到博多（約20分）。',
+timeline:[['09:30','抵達福岡機場 → 博多放行李、買 SUGOCA',0],['10:30','櫛田神社',1],['11:30','博多町家故鄉館',0],['12:30','博多午餐（拉麵／明太子）',0],['14:00','天神逛街',0],['16:00','大濠公園散步（可選）',0],['17:30','Canal City Hakata',0],['19:00','中洲屋台晚餐',1],['21:00','回博多',0]],
+notes:['下午才到的話，白天行程直接砍掉，晚上走 Canal City＋中洲屋台即可。','北九州 Pass 第 3 天才啟用。'],
+stay:'博多車站一帶（待訂）',
+stops:[['福岡機場',33.5859,130.4506],['博多車站',33.5897,130.4207],['櫛田神社',33.5937,130.4107],['博多町家故鄉館',33.5925,130.4089],['天神',33.5902,130.4017],['大濠公園',33.5860,130.3766],['Canal City',33.5872,130.4108],['中洲',33.5922,130.4017]]},
+{day:'D2',place:'太宰府',title:'Day 2　太宰府半日',tags:[['巴士','green'],['步行','green']],
+transport:'博多巴士總站搭「旅人」巴士 → 太宰府（約40分，¥800，免預約）；或西鐵天神 → 二日市 → 太宰府（約40分）。',
+timeline:[['09:00','博多巴士總站出發',0],['09:40','太宰府站 → 參道散步',0],['10:00','太宰府天滿宮（梅枝餅必吃）',1],['11:30','九州國立博物館',0],['13:00','太宰府午餐',0],['14:30','回博多／天神補逛、買伴手禮',0],['19:00','博多晚餐（牛腸鍋／水炊き）',0]],
+notes:['天滿宮＋博物館是同一條步行動線，半日足夠。','住博多的人搭「旅人」巴士比繞去天神轉西鐵更直接。'],
+stay:'博多車站一帶（待訂）',
+stops:[['博多車站',33.5897,130.4207],['太宰府站',33.5189,130.5333],['太宰府天滿宮',33.5217,130.5349],['九州國立博物館',33.5186,130.5379],['天神',33.5902,130.4017]]},
+{day:'D3',place:'長崎',title:'Day 3　博多 → 長崎',tags:[['JR特急','blue'],['新幹線','blue'],['路面電車','green']],
+transport:'特急「接力燕子號」博多 → 武雄溫泉（同月台轉乘）→ 西九州新幹線「海鷗號」→ 長崎，全程約1小時50分。北九州 Pass 今天啟用，記得劃指定席。',
+timeline:[['09:00','博多車站出發',0],['10:50','抵達長崎 → 觀光案內所買路面電車一日券（¥600）→ 飯店放行李',0],['11:40','新地中華街午餐（強麵發源地「四海樓」）',1],['13:30','眼鏡橋散步',0],['14:30','大浦天主堂＋哥拉巴園',1],['17:00','回飯店休息',0],['18:00','晚餐（思案橋一帶：拉麵、土耳其飯）',0],['19:00','稻佐山夜景（纜車上山）',1]],
+notes:['路面電車一日券車上不賣，先在車站觀光案內所買好。','稻佐山是日本三大夜景之一，為這天收尾。'],
+stay:'長崎市區（待訂）',
+stops:[['博多車站',33.5897,130.4207],['武雄溫泉車站',33.1907,130.0236],['長崎車站',32.7522,130.8677],['新地中華街',32.7427,129.8752],['眼鏡橋',32.7475,129.8807],['大浦天主堂・哥拉巴園',32.7342,129.8700],['稻佐山',32.7534,129.8656]]},
+{day:'D4',place:'長崎市區',title:'Day 4　長崎市區深度',tags:[['路面電車','green'],['步行','green']],
+transport:'路面電車 1 號系統串連主要景點（一日券 ¥600）。',
+timeline:[['09:00','平和公園',0],['10:30','長崎原爆資料館',0],['12:00','午餐（市區）',0],['13:30','出島',1],['15:00','諏訪神社',0],['16:30','濱町拱廊街散步',0],['18:00','晚餐（土耳其飯）',0],['19:30','自由活動（昨晚已看夜景，今晚輕鬆）',0]],
+notes:['5 號系統（大浦／眼鏡橋方向）要在新地中華街轉 1 號系統。','IC 卡 30 分鐘內轉乘第二程免費。'],
+stay:'長崎市區（待訂）',
+stops:[['長崎車站',32.7522,130.8677],['平和公園',32.7768,129.8631],['原爆資料館',32.7732,129.8652],['出島',32.7436,129.8710],['諏訪神社',32.7542,129.8843],['濱町',32.7489,129.8778]]},
+{day:'D5',place:'熊本',title:'Day 5　長崎 → 熊本',tags:[['JR新幹線','blue']],
+transport:'JR：長崎 →（新幹線海鷗號）→ 武雄溫泉 →（接力燕子號）→ 新鳥栖 →（九州新幹線）→ 熊本，約2小時40分–3小時，¥10,760（Pass 有效）。或高速巴士「りんどう號」約3小時38分，¥4,200（班次少）。',
+timeline:[['09:00','長崎出發（JR）',0],['12:00','抵達熊本 → 飯店放行李',0],['12:30','城彩苑午餐（櫻之馬場）',0],['13:30','熊本城',1],['16:00','水前寺成趣園',0],['18:00','晚餐（馬刺し、太平燕）',0]],
+notes:['在 Pass 有效期內選 JR 又快又划算。','りんどう號 2026/3 起減為每日 3 往返，時刻出發前以官網為準。'],
+stay:'熊本市區（待訂）',
+stops:[['長崎車站',32.7522,130.8677],['熊本站',32.6842,130.6895],['城彩苑',32.8039,130.7056],['熊本城',32.8061,130.7059],['水前寺成趣園',32.7917,130.7306]]},
+{day:'D6',place:'高千穗',title:'Day 6　熊本 → 高千穗',tags:[['高速巴士','green']],
+transport:'高速巴士「たかちほ號」：熊本站前 9:11 發（只有早晚兩班，務必搭上）→ 高千穗巴士中心 12:19，約3小時08分，¥2,700，全車指定席，1個月前預約。',
+timeline:[['09:11','熊本站前 7 號乘車處上車（提早到）',1],['12:19','高千穗巴士中心 → 午餐',0],['13:30','高千穗峽（划船／步道）',1],['15:30','天岩戶神社＋天安河原（ふれあい巴士約15–20分）',0],['18:00','晚餐',0],['20:00','高千穗神樂（高千穗神社每晚表演，可選）',0]],
+notes:['划船只接受網路預約，乘船日 2 週前 9:00 開放；10 月週末為完全預約制、10/14 停業，平日也建議開放瞬間搶。','這班巴士是當天唯一早班，錯過就沒有了。'],
+stay:'高千穗（待訂）',
+stops:[['熊本站',32.6842,130.6895],['高千穗巴士中心',32.7063,131.3077],['高千穗峽',32.6997,131.3017],['天岩戶神社',32.7317,131.3508]]},
+{day:'D7',place:'阿蘇',title:'Day 7　高千穗 → 熊本 → 阿蘇',tags:[['巴士','green'],['觀光列車','yellow']],
+transport:'高千穗巴士中心 8:42 發（上午僅此一班！）→ 熊本站前 11:43；轉特急「阿蘇男孩！」3 號 13:36 → 阿蘇 15:06（行駛日限定、全車指定席，¥3,080；先查運転日曆）。',
+timeline:[['08:42','高千穗巴士中心出發（不能遲到）',1],['11:43','抵達熊本站前 → 車站午餐＋休息',0],['13:36','阿蘇男孩 3 號出發',0],['15:06','抵達阿蘇 → 飯店',0],['15:30','阿蘇神社＋門前町散步',1],['18:00','晚餐（あか牛）',0]],
+notes:['阿蘇男孩採行駛日曆制，部分日期只跑 3・4 號；停駛日可能由「かわせみ やませみ」代駛，出發前務必確認。','中岳火口目前封閉（噴火警戒等級 2）；大觀峰路線巴士僅週末假日行駛。'],
+stay:'阿蘇（待訂）',
+stops:[['高千穗巴士中心',32.7063,131.3077],['熊本站',32.6842,130.6895],['阿蘇站',32.9544,131.0800],['阿蘇神社',32.9544,131.0839]]},
+{day:'D8',place:'黑川溫泉',title:'Day 8　阿蘇 → 黑川溫泉',tags:[['巴士','green'],['溫泉','coral']],
+transport:'九州橫斷巴士直達（阿蘇站前上車），約1小時，每日 3 往返，全車預約制，1個月前電話／網路預約；出發前上產交巴士官網查當日時刻。',
+timeline:[['上午','搭巴士前往黑川溫泉（配合班次，約1小時）',0],['中午','抵達 → 午餐 → 旅館 check-in（約15:00）',0],['下午','溫泉街散步＋「入湯手形」泡 3 家外湯',1],['晚上','旅館懷石晚餐',0]],
+notes:['入湯手形是黑川名物，一張木牌可泡三家露天風呂。','黑川溫泉街不大，重點就是泡湯＋散步，行程放鬆排。'],
+stay:'黑川溫泉旅館（待訂）',
+stops:[['阿蘇站',32.9544,131.0800],['黑川溫泉',33.0772,131.1422]]},
+{day:'D9',place:'由布院',title:'Day 9　黑川溫泉 → 由布院',tags:[['巴士','green'],['溫泉','coral']],
+transport:'九州橫斷巴士由布院線（經黑川 → 由布院），每日 2 班，約1小時15分，全車預約制，1個月前預約。',
+timeline:[['上午','黑川最後一泡 → 退房',0],['中午','搭巴士前往由布院',0],['下午','湯之坪街道、金鱗湖散步',1],['晚上','溫泉旅館',0]],
+notes:['班次少，先查好時刻；早上還能悠閒泡一輪再走。'],
+stay:'由布院溫泉旅館（待訂）',
+stops:[['黑川溫泉',33.0772,131.1422],['由布院站',33.2658,131.3603],['金鱗湖',33.2697,131.3628],['湯之坪街道',33.2642,131.3586]]},
+{day:'D10',place:'別府',title:'Day 10　由布院 → 別府',tags:[['觀光列車','yellow'],['溫泉','coral']],
+transport:'JR「由布院之森」3 號 12:32 → 別府 13:31（全車指定席；部分日子改由特急「由布」行駛）；或龜之井巴士「ゆふりん」（平日 6 班，約66分，¥1,100）。',
+timeline:[['09:30','由布院早餐＋最後散步',0],['12:32','搭由布院之森前往別府（或搭巴士）',0],['13:30','抵達別府 → 飯店放行李',0],['14:30','地獄巡迴（海地獄、血之池地獄等；觀光巴士約2.5小時）',1],['18:00','晚餐（とり天）',0],['19:30','別府溫泉（竹瓦溫泉砂浴可選）',0]],
+notes:['由布院之森部分運転日改由「由布」行駛（無車內販售），劃位時確認。','地獄巡迴巴士現行票價出發前查龜之井巴士官網。'],
+stay:'別府（待訂）',
+stops:[['由布院站',33.2658,131.3603],['別府站',33.2819,131.5042],['海地獄',33.2808,131.4711],['血之池地獄',33.2969,131.4778]]},
+{day:'D11',place:'宮崎',title:'Day 11　別府 → 宮崎',tags:[['JR特急','blue']],
+transport:'特急「日輪」約3小時15分，每 1–1.5 小時一班，¥7,440。',
+timeline:[['09:53','別府出發（日輪シーガイア 5 號為例）',0],['13:07','抵達宮崎 → 午餐（地雞炭火燒）',0],['14:30','青島半日（JR 日南線約25–30分；青島神社＋鬼之洗濯板）',1],['17:30','回宮崎市區',0],['19:00','晚餐（宮崎牛）',0]],
+notes:['青島站是無人站，SUGOCA 可用；往宮崎方向每小時約 1 班。'],
+stay:'宮崎市區（待訂）',
+stops:[['別府站',33.2819,131.5042],['宮崎站',31.9077,131.4202],['青島站',31.8033,131.4744],['青島神社',31.8008,131.4761]]},
+{day:'D12',place:'鹿兒島',title:'Day 12　宮崎 → 鹿兒島（終點）',tags:[['JR特急','blue'],['渡輪','purple']],
+transport:'特急「霧島」約2小時10分–2小時20分，每日 9 往返，¥5,190。',
+timeline:[['09:00','宮崎出發',0],['11:20','抵達鹿兒島中央 → 寄行李',0],['12:00','午餐（黑豬涮涮鍋／白熊冰）',0],['13:30','仙巖園（JR 日豐本線「仙巖園站」步行1分；門票¥1,600）',1],['15:30','櫻島渡輪（鹿兒島港 → 櫻島港約15分，¥250）',1],['17:30','回鹿兒島中央 → 天文館逛街晚餐',0],['晚上','行程終點 🎉',0]],
+notes:['回程機票若買開口票 TPE → 福岡／鹿兒島 → TPE 最順（華航有鹿兒島航線，班次先查）。'],
+stay:'— 行程終點，當晚返台或自行加住一晚',
+stops:[['宮崎站',31.9077,131.4202],['鹿兒島中央站',31.5839,130.5411],['仙巖園',31.6175,130.5778],['櫻島渡輪（鹿兒島港）',31.5928,130.5697],['櫻島港',31.5797,130.5969]]}
+];
+var PRE=[
+'買北九州 JR Pass（D3 啟用，5 日券用到 D7）',
+'劃指定席：接力燕子號、海鷗號、阿蘇男孩、由布院之森、日輪、霧島',
+'預約高千穗峽划船（乘船日 2 週前 09:00 開放）',
+'預約たかちほ號巴士（熊本 → 高千穗，1 個月前）',
+'預約九州橫斷巴士（阿蘇 → 黑川、黑川 → 由布院，1 個月前）',
+'查阿蘇男孩運転日曆（行駛日限定）',
+'填 Visit Japan Web（入境＋海關申報，截圖 QR Code）',
+'買旅平險＋不便險',
+'護照效期確認（6 個月以上）',
+'訂機票：去程 TPE → 福岡',
+'訂機票：回程 鹿兒島 → TPE（開口票）',
+'訂住宿 11 晚（博多 2／長崎 2／熊本 1／高千穗 1／阿蘇 1／黑川 1／由布院 1／別府 1／宮崎 1）',
+'辦 eSIM／網卡',
+'換日幣／確認信用卡海外可用',
+'買 SUGOCA（到福岡機場買也可）',
+'長崎路面電車一日券：到長崎車站觀光案內所買（車上不賣）'];
+var PACK=[
+'護照＋機票／訂位紀錄截圖','日幣現金＋信用卡','輕便背包（每日用）','好走的鞋（每天走很多路）',
+'輕便雨衣／折疊傘','保暖外套（阿蘇、高千穗早晚涼）','溫泉毛巾（黑川、由布院、別府泡湯用）',
+'盥洗用品＋保養品','常備藥品','充電器＋行動電源＋轉接頭','耳機','購物袋（日本塑膠袋收費）'];
+var NEAR=[
+['🍜','拉麵','拉麵'],['🍽️','餐廳','餐廳'],['☕','咖啡店','咖啡店'],['🍰','甜點','甜點'],
+['🏪','便利商店','便利商店'],['💊','藥妝店','藥妝店'],['🍼','哺乳室','哺乳室'],['🚻','廁所','廁所'],
+['🅿️','停車場','停車場'],['⛽','加油站','加油站']];
+
+/* ---------- 小工具 ---------- */
+function $(id){return document.getElementById(id);}
+function store(k,v){try{localStorage.setItem('kx25_'+k,JSON.stringify(v));}catch(e){}}
+function load(k,d){try{var v=localStorage.getItem('kx25_'+k);return v===null?d:JSON.parse(v);}catch(e){return d;}}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function mapsUrl(lat,lng){return 'https://www.google.com/maps/search/?api=1&query='+lat+','+lng;}
+/* ---------- 頂端選單 ---------- */
+document.querySelectorAll('#nav button').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('#nav button').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    document.querySelectorAll('section').forEach(function(s){s.classList.remove('on');});
+    var sec=$('sec-'+b.getAttribute('data-sec'));
+    sec.classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+/* ---------- 每日行程 ---------- */
+var curDay=0, depDate=load('dep',null);
+function dayDate(i){
+  if(!depDate) return '';
+  var d=new Date(depDate+'T00:00:00');
+  d.setDate(d.getDate()+i);
+  var w=['日','一','二','三','四','五','六'][d.getDay()];
+  return (d.getMonth()+1)+'/'+d.getDate()+'（'+w+'）';
+}
+function renderPills(){
+  var html='';
+  DAYS.forEach(function(d,i){
+    var dt=dayDate(i);
+    html+='<button data-i="'+i+'" class="'+(i===curDay?'on':'')+'">'+d.day+' '+d.place+(dt?'<small>'+dt+'</small>':'')+'</button>';
+  });
+  $('day-pills').innerHTML=html;
+  document.querySelectorAll('#day-pills button').forEach(function(b){
+    b.addEventListener('click',function(){
+      curDay=+b.getAttribute('data-i');
+      renderPills(); renderDay();
+      b.classList.remove('bounce'); void b.offsetWidth; b.classList.add('bounce');
+    });
+  });
+}
+function renderDay(){
+  var d=DAYS[curDay], dt=dayDate(curDay);
+  var h='<div class="card"><h3>'+esc(d.title)+(dt?' <span class="small">'+dt+'</span>':'')+'</h3><div>';
+  d.tags.forEach(function(t){h+='<span class="tag '+t[1]+'">'+esc(t[0])+'</span>';});
+  h+='</div><p>'+esc(d.transport)+'</p>';
+  h+='<p>🏨 今晚住宿：<b>'+esc(d.stay)+'</b></p>';
+  h+='<ul class="tl">';
+  d.timeline.forEach(function(t){
+    h+='<li><span class="t">'+esc(t[0])+'</span>'+esc(t[1])+(t[2]?'<span class="must">★ 必去</span>':'')+'</li>';
+  });
+  h+='</ul>';
+  d.notes.forEach(function(n){h+='<div class="note">💡 '+esc(n)+'</div>';});
+  h+='<div class="stops">📍 這天路線：';
+  h+=d.stops.map(function(s){
+    return '<a href="'+mapsUrl(s[1],s[2])+'" target="_blank" rel="noopener">'+esc(s[0])+'</a>';
+  }).join(' → ');
+  h+='<br><span class="small">點地名開 Google 地圖。</span></div></div>';
+  $('day-body').innerHTML=h;
+}
+/* ---------- 倒數＋日本時間 ---------- */
+function tick(){
+  var now=new Date();
+  try{
+    $('jptime').textContent=new Intl.DateTimeFormat('zh-TW',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hour12:false}).format(now);
+  }catch(e){$('jptime').textContent='–';}
+  if(!depDate) return;
+  var target=new Date(depDate+'T00:00:00');
+  var diff=target-now;
+  if(diff<=0){
+    $('cd-d').textContent='0';$('cd-h').textContent='0';$('cd-m').textContent='0';$('cd-s').textContent='0';
+    $('cd-label').textContent='出發日到了，旅途愉快！';
+    return;
+  }
+  var s=Math.floor(diff/1000);
+  $('cd-d').textContent=Math.floor(s/86400);
+  $('cd-h').textContent=String(Math.floor(s%86400/3600)).padStart(2,'0');
+  $('cd-m').textContent=String(Math.floor(s%3600/60)).padStart(2,'0');
+  $('cd-s').textContent=String(s%60).padStart(2,'0');
+  var t=new Date(depDate+'T00:00:00');
+  $('cd-label').textContent='距離出發（'+(t.getMonth()+1)+'/'+t.getDate()+'）還有';
+}
+$('dep-date').addEventListener('change',function(){
+  depDate=this.value||null;
+  store('dep',depDate);
+  renderPills(); renderDay(); tick();
+  if(!depDate) $('cd-label').textContent='還沒設定出發日，點上面選一天，倒數就開始跑。';
+});
+/* ---------- 航班填寫 ---------- */
+function editFlight(label,key){
+  var old=load(key,'');
+  var v=prompt(label+'（例如：星宇 7G800，11/30 03:00 桃園 → 06:15 福岡）',old||'');
+  if(v===null) return;
+  store(key,v);
+  showFlight(key);
+}
+function showFlight(key){
+  var v=load(key,'');
+  $(key).innerHTML=v?('✈️ '+esc(v)):'';
+}
+/* ---------- 清單 ---------- */
+function renderCheck(listId,countId,barId,items,key){
+  var done=load(key,{});
+  var ul=$(listId), n=0;
+  ul.innerHTML='';
+  items.forEach(function(text,i){
+    var li=document.createElement('li');
+    if(done[i]){li.className='done'; n++;}
+    li.innerHTML='<span class="box">'+(done[i]?'✓':'')+'</span><span class="txt">'+esc(text)+'</span>';
+    li.addEventListener('click',function(){
+      done[i]=!done[i];
+      store(key,done);
+      renderCheck(listId,countId,barId,items,key);
+    });
+    ul.appendChild(li);
+  });
+  $(countId).textContent='已完成 '+n+'/'+items.length;
+  $(barId).style.width=Math.round(n/items.length*100)+'%';
+}
+/* ---------- 找我附近的 ---------- */
+(function(){
+  var g=$('near-grid'), html='';
+  NEAR.forEach(function(n){
+    html+='<a href="https://www.google.com/maps/search/'+encodeURIComponent(n[2])+'" target="_blank" rel="noopener"><span class="ic">'+n[0]+'</span>'+n[1]+'</a>';
+  });
+  g.innerHTML=html;
+})();
+/* ---------- 日幣換算 ---------- */
+function jpyCalc(){
+  var v=parseFloat($('jpy-in').value), r=parseFloat($('jpy-rate').value);
+  if(isNaN(v)||isNaN(r)){ $('jpy-out').textContent=''; return; }
+  $('jpy-out').textContent='≈ NT$ '+Math.round(v*r).toLocaleString('en-US');
+  store('rate',r);
+}
+$('jpy-in').addEventListener('input',jpyCalc);
+$('jpy-rate').addEventListener('input',jpyCalc);
+/* ---------- 啟動 ---------- */
+(function init(){
+  if(depDate) $('dep-date').value=depDate;
+  var r=load('rate',null); if(r!==null) $('jpy-rate').value=r;
+  renderPills(); renderDay();
+  renderCheck('pre-list','pre-count','pre-bar',PRE,'pre');
+  renderCheck('pack-list','pack-count','pack-bar',PACK,'pack');
+  showFlight('flight-out'); showFlight('flight-back');
+  tick(); setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>
